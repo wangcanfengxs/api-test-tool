@@ -1,0 +1,26 @@
+{
+  "requests":[
+    {
+      "name":"test_case_1",
+      "url":"https://934deeac-53c4-4d57-949a-ce768665ef06.mock.pstmn.io/testGet",
+      "queryParams":[
+        {
+          "key":"value1",
+          "value": "value2"
+        }
+      ],
+      "data":"{}",
+      "headerData":[
+        {
+          "key":"Content-Type",
+          "value":"application/json"
+        }
+      ],
+      "method":"get",
+      "description":"testGet",
+      "expect": {
+        "httpStatusCode": 200
+      }
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "requests":[
+    {
+      "name":"test_get",
+      "url":"http://localhost:8080/testGet",
+      "queryParams":[
+        {
+          "key":"key",
+          "value": "value1"
+        },
+        {
+          "key":"key",
+          "value": "value2"
+        },
+        {
+          "key":"name",
+          "value": "example"
+        }
+      ],
+      "headerData":[
+        {
+          "key":"key1",
+          "value":"value1"
+        }
+      ],
+      "method":"get",
+      "description":"test_get",
+      "expect": {
+        "httpStatusCode": 200,
+        "asserts": [
+          {
+            "jsonpath": "$.name[0]",
+            "match": "example"
+          }
+        ]
+      }
+    },
+    {
+      "name":"test_post",
+      "url":"http://localhost:8080/testPost",
+      "queryParams":[
+        {
+          "key":"key",
+          "value": "value1"
+        },
+        {
+          "key":"key",
+          "value": "value2"
+        },
+        {
+          "key":"name",
+          "value": "example"
+        }
+      ],
+      "headerData":[
+        {
+          "key":"key1",
+          "value":"value1"
+        }
+      ],
+      "data": "{\"hello\": \"world\"}",
+      "method":"post",
+      "description":"test_post",
+      "expect": {
+        "httpStatusCode": 200,
+        "asserts": [
+          {
+            "jsonpath": "$.code",
+            "match": "200"
+          }
+        ]
+      }
+    },
+    {
+      "name":"test_put",
+      "url":"http://localhost:8080/testPut",
+      "queryParams":[
+        {
+          "key":"key",
+          "value": "value1"
+        },
+        {
+          "key":"key",
+          "value": "value2"
+        },
+        {
+          "key":"name",
+          "value": "example"
+        }
+      ],
+      "headerData":[
+        {
+          "key":"key1",
+          "value":"value1"
+        }
+      ],
+      "data": "{\"hello\": \"world\"}",
+      "method":"put",
+      "description":"test_put",
+      "expect": {
+        "httpStatusCode": 200,
+        "asserts": [
+          {
+            "jsonpath": "$.code",
+            "match": "200"
+          }
+        ]
+      }
+    },
+    {
+      "name":"test_delete",
+      "url":"http://localhost:8080/testDelete",
+      "queryParams":[
+        {
+          "key":"key",
+          "value": "value1"
+        },
+        {
+          "key":"key",
+          "value": "value2"
+        },
+        {
+          "key":"name",
+          "value": "example"
+        }
+      ],
+      "headerData":[
+        {
+          "key":"key1",
+          "value":"value1"
+        }
+      ],
+      "data": "{\"hello\": \"world\"}",
+      "method":"delete",
+      "description":"test_delete",
+      "expect": {
+        "httpStatusCode": 200,
+        "asserts": [
+          {
+            "jsonpath": "$.code",
+            "match": "200"
+          }
+        ]
+      }
+    }
+
+  ]
+}

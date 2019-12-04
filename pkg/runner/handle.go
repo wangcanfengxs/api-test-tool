@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 
 	"github.com/yalp/jsonpath"
@@ -124,7 +125,8 @@ func checkHttpResponse(expect *ExpectResponse, httpResponse *http.Response) erro
 				if err != nil {
 					return err
 				}
-				if fmt.Sprintf("%v", value) != fmt.Sprintf("%v", assert.Match) {
+				matched, err := regexp.MatchString(fmt.Sprintf("%v", assert.Match), fmt.Sprintf("%v", value))
+				if !matched {
 					return fmt.Errorf("response body not match, jsonpath %q, value: %q, expect: %q ", assert.Jsonpath, value, assert.Match)
 				}
 			}

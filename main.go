@@ -9,35 +9,62 @@ import (
 )
 
 var (
-	file string
+	file      string
+	directory string
 )
 
 func usage() string {
 	return fmt.Sprintf("Tips: apitest -f test.json")
 }
 
+func getAllFiles(files *[]string, dirPath string) {
+	dir, err := ioutil.ReadDir(dirPath)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, fileInfo := range dir {
+		if fileInfo.IsDir() {
+			getAllFiles(files, dirPath+"/"+fileInfo.Name())
+		} else {
+			*files = append(*files, dirPath+"/"+fileInfo.Name())
+		}
+	}
+}
+
 func main() {
-	flag.StringVar(&file, "f", "", "-f [file]")
+	flag.StringVar(&file, "f", "", "-f <file>")
+	flag.StringVar(&directory, "d", "", "-d <directory>")
 	flag.Parse()
-	if file == "" {
+
+	if file == "" && directory == "" {
 		fmt.Println(usage())
 		return
 	}
 
-	// 读取文件
-	data, err := ioutil.ReadFile(file)
-	if err != nil {
-		panic(err)
+	files := make([]string, 0)
+	if directory != "" {
+		getAllFiles(&files, directory)
+	} else {
+		files = append(files, file)
 	}
 
-	// check data
-	apiTestRunner, err := checkFileData(data)
-	//fmt.Println(apiTestRunner)
-	if err != nil {
-		panic(err)
-	}
+	for _, filePath := range files {
+		data, err := ioutil.ReadFile(filePath)
+		if err != nil {
+			fmt.Println(err)
+		}
 
-	apiTestRunner.Run()
+		// check data
+		apiTestRunner, err := checkFileData(data)
+		// fmt.Println(apiTestRunner)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		apiTestRunner.Run()
+		fmt.Printf("Finished running requests in %s\n", filePath)
+	}
 }
 
 func checkFileData(data []byte) (*runner.ApiTestRunner, error) {

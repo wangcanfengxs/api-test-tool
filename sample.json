@@ -1,0 +1,54 @@
+{
+	"info": {
+		"name": "ncs-deploy-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "listRevisions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/test?Action=ListRevisions&Version=2019-06-18",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"test"
+					],
+					"query": [
+						{
+							"key": "Action",
+							"value": "ListRevisions"
+						},
+						{
+							"key": "Version",
+							"value": "2019-06-18"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e0c5c1ac-0411-4f3f-9d2f-15602dbd7987",
+				"type": "text/javascript",
+				"exec": [
+					"pm.sendRequest('http://xxxx/authority?Action=GenToken&Version=2018-08-09&AccessKey=xxx&AccessSecret=xxx', function (err, res) {",
+					"    if (err) {",
+					"        console.log(err);",
+					"    } else {",
+					"        pm.environment.set(\"Token\", JSON.parse(res.text()).Token)",
+					"    }",
+					"});"
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
